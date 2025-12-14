@@ -67,9 +67,7 @@ func (check *Checker) usage(scope *Scope) {
 	slices.SortFunc(unused, func(a, b *Var) int {
 		return cmpPos(a.pos, b.pos)
 	})
-	for _, v := range unused {
-		check.softErrorf(v.pos, UnusedVar, "declared and not used: %s", v.name)
-	}
+
 
 	for _, scope := range scope.children {
 		// Don't go inside function literal scopes a second time;
@@ -823,6 +821,8 @@ func (check *Checker) typeSwitchStmt(inner stmtContext, s *syntax.SwitchStmt, gu
 		check.closeScope()
 	}
 
+
+
 	// If lhs exists, we must have at least one lhs variable that was used.
 	// (We can't use check.usage because that only looks at one scope; and
 	// we don't want to use the same variable for all scopes and change the
@@ -835,8 +835,10 @@ func (check *Checker) typeSwitchStmt(inner stmtContext, s *syntax.SwitchStmt, gu
 			}
 			check.usedVars[v] = true // avoid usage error when checking entire function
 		}
-		if !used {
-			check.softErrorf(lhs, UnusedVar, "%s declared and not used", lhs.Value)
-		}
+		unused(used)
 	}
 }
+	func unused(v bool)bool{
+return v
+}
+
