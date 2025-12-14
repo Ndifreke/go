@@ -3,40 +3,49 @@
 Go is an open source programming language that makes it easy to build simple,
 reliable, and efficient software.
 
-![Gopher image](https://golang.org/doc/gopher/fiveyears.jpg)
-*Gopher image by [Renee French][rf], licensed under [Creative Commons 4.0 Attribution license][cc4-by].*
+## ⚙️ Go Language: Unrestricted Compiler Fork
 
-Our canonical Git repository is located at https://go.googlesource.com/go.
-There is a mirror of the repository at https://github.com/golang/go.
+This repository contains a customized fork of the official Go Programming Language source code based off v1.26.
 
-Unless otherwise noted, the Go source files are distributed under the
-BSD-style license found in the LICENSE file.
+**Key Difference:** This version has the compiler's strict checks for **unused imports and unused variables** intentionally disabled.
 
-### Download and Install
+### ⚠️ IMPORTANT NOTE
 
-#### Binary Distributions
+The standard Go compiler normally enforces these checks to promote clean, maintainable, and efficient code. This fork sacrifices those checks, allowing code with unused elements to compile successfully. Use this version only if you understand and accept the potential trade-offs.
 
-Official binary distributions are available at https://go.dev/dl/.
 
-After downloading a binary release, visit https://go.dev/doc/install
-for installation instructions.
+### 🛠️ Building from Source
 
-#### Install From Source
+To use this unrestricted version of Go, you must compile the toolchain from the source code.
 
-If a binary distribution is not available for your combination of
-operating system and architecture, visit
-https://go.dev/doc/install/source
-for source installation instructions.
+1.  **Clone the Repository:**
 
-### Contributing
+    ```bash
+    git clone https://github.com/Ndifreke/go.git
+    cd go
+    ```
 
-Go is the work of thousands of contributors. We appreciate your help!
+2.  **Navigate to Source and Build:**
+    Use an existing Go installation (Go 1.4+ is required for bootstrapping) to build the new toolchain.
 
-To contribute, please read the contribution guidelines at https://go.dev/doc/contribute.
+| Operating System | Command |
+| :--- | :--- |
+| **Unix or Mac** | `cd src && ./make.bash` |
+| **Windows** | `cd src && make.bat` |
 
-Note that the Go project uses the issue tracker for bug reports and
-proposals only. See https://go.dev/wiki/Questions for a list of
-places to ask questions about the Go language.
+### 🚀 Usage
 
-[rf]: https://reneefrench.blogspot.com/
-[cc4-by]: https://creativecommons.org/licenses/by/4.0/
+After a successful build, the new Go executables will be located in the `bin` directory of your cloned repository.
+
+To use this version, set the `GOROOT` and update your `PATH` environment variable:
+
+```bash
+# Example for Linux/macOS
+export GOROOT=$(pwd)  # Point to the root of this repo
+export PATH=$GOROOT/bin:$PATH
+
+# Verify the version:
+go version
+```
+
+This setup ensures that when you run `go build` or `go run`, you are using the modified compiler that ignores unused imports and variables.
